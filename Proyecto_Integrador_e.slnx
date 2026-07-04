@@ -1,3 +1,7 @@
 <Solution>
-  <Project Path="Proyecto_Integrador_e/Proyecto_Integrador_e.csproj" />
+  <Project Path="Api_Consumer/Api_Consumer.csproj" Id="9b70c152-8993-4479-aa65-d1a026ef51a0" />
+  <Project Path="Api_Integrador/Api_Integrador.csproj" Id="b7834222-4ede-4c2c-99f4-844d431de1af" />
+  <Project Path="MMV_Integrador/MMV_Integrador.csproj" Id="b81f9d65-97db-4f35-b1c9-45b280617878" />
+  <Project Path="Modelos_Integrador/Modelos_Integrador.csproj" Id="6aa0deae-655b-4d7a-b57d-b9864b8f6a19" />
+  <Project Path="MVC_Seguridad_Integrador/MVC_Seguridad_Integrador.csproj" Id="71660248-3e8e-448f-a3a5-855b31221e14" />
 </Solution>
