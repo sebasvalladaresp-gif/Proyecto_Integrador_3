@@ -10,7 +10,7 @@ namespace Modelos_Integrador
     {
         public int ID { get; set; }
         public string Nombre { get; set; }
-        public string CodigoFifa { get; set; }
+        public string CodigoFifa { get; set; } 
 
         public int ConfederacionID { get; set; }
         public Confederacion? Confederacion { get; set; }
