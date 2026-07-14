@@ -9,7 +9,8 @@ namespace Api_Integrador.Data
             : base(options)
         {
         }
-
-        public DbSet<Ciudad> Ciudades { get; set; }
+        // DbSet for Confederacion model
+        public DbSet<Modelos_Integrador.Confederacion> Confederaciones { get; set; }
+        
     }
 }
