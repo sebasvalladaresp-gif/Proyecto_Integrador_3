@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTO_Integrador
 {
-    public class UsuarioDTO
+    public class AdministradorDTO
     {
         public int ID { get; set; }
         public string Nombre { get; set; }

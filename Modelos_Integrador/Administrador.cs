@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modelos_Integrador
 {
-    public class Usuario
+    public class Administrador
     {
         public int ID { get; set; }
         public string Nombre { get; set; }

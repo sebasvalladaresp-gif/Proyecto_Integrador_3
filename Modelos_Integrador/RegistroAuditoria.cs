@@ -10,8 +10,8 @@ namespace Modelos_Integrador
     {
         public int ID { get; set; }
 
-        public int UsuarioAdminID { get; set; }
-        public Usuario? UsuarioAdmin { get; set; }
+        public int AdministradorID { get; set; }
+        public Administrador? Administrador { get; set; }
 
         public DateTime FechaHora { get; set; }
         public string Descripcion { get; set; }
