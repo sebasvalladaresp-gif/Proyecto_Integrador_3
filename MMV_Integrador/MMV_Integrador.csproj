@@ -10,4 +10,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Api_Integrador\Api_Integrador.csproj" />
+    <ProjectReference Include="..\Modelos_Integrador\Modelos_Integrador.csproj" />
+  </ItemGroup>
+
 </Project>
