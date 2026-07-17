@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Modelos_Integrador
 {
-    public class Estadio
+    public class AccionAdministrativa
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
-
-        public int SedeId { get; set; }
-        public Sede? Sede { get; set; }
-
-        public List<Partido>? Partidos { get; set; }
+        public List<RegistroAuditoria>? RegistrosAuditoria { get; set; }
     }
 }

@@ -22,6 +22,23 @@ namespace Api_Integrador.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Modelos_Integrador.AccionAdministrativa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccionesAdministrativas");
+                });
+
             modelBuilder.Entity("Modelos_Integrador.Administrador", b =>
                 {
                     b.Property<int>("ID")
@@ -42,12 +59,12 @@ namespace Api_Integrador.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("RolID")
+                    b.Property<int>("RolId")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("RolID");
+                    b.HasIndex("RolId");
 
                     b.ToTable("Administradores");
                 });
@@ -81,12 +98,12 @@ namespace Api_Integrador.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("SedeID")
+                    b.Property<int>("SedeId")
                         .HasColumnType("integer");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("SedeID");
+                    b.HasIndex("SedeId");
 
                     b.ToTable("Estadios");
                 });
@@ -153,10 +170,10 @@ namespace Api_Integrador.Migrations
                     b.Property<int>("EstadioID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("EstadoID")
+                    b.Property<int>("EstadoPartidoId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("FaseID")
+                    b.Property<int>("FaseId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Fecha")
@@ -181,9 +198,9 @@ namespace Api_Integrador.Migrations
 
                     b.HasIndex("EstadioID");
 
-                    b.HasIndex("EstadoID");
+                    b.HasIndex("EstadoPartidoId");
 
-                    b.HasIndex("FaseID");
+                    b.HasIndex("FaseId");
 
                     b.HasIndex("SeleccionLocalID");
 
@@ -200,7 +217,10 @@ namespace Api_Integrador.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("AdministradorID")
+                    b.Property<int>("AccionAdministrativaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AdministradorId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Descripcion")
@@ -212,7 +232,9 @@ namespace Api_Integrador.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AdministradorID");
+                    b.HasIndex("AccionAdministrativaId");
+
+                    b.HasIndex("AdministradorId");
 
                     b.ToTable("RegistroAuditorias");
                 });
@@ -243,10 +265,6 @@ namespace Api_Integrador.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Ciudad")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Pais")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -290,7 +308,7 @@ namespace Api_Integrador.Migrations
                 {
                     b.HasOne("Modelos_Integrador.Rol", "Rol")
                         .WithMany("administradores")
-                        .HasForeignKey("RolID")
+                        .HasForeignKey("RolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -301,7 +319,7 @@ namespace Api_Integrador.Migrations
                 {
                     b.HasOne("Modelos_Integrador.Sede", "Sede")
                         .WithMany("Estadios")
-                        .HasForeignKey("SedeID")
+                        .HasForeignKey("SedeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -318,13 +336,13 @@ namespace Api_Integrador.Migrations
 
                     b.HasOne("Modelos_Integrador.EstadoPartido", "Estado")
                         .WithMany("Partidos")
-                        .HasForeignKey("EstadoID")
+                        .HasForeignKey("EstadoPartidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Modelos_Integrador.FaseDeJuego", "Fase")
                         .WithMany("Partidos")
-                        .HasForeignKey("FaseID")
+                        .HasForeignKey("FaseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -353,11 +371,19 @@ namespace Api_Integrador.Migrations
 
             modelBuilder.Entity("Modelos_Integrador.RegistroAuditoria", b =>
                 {
-                    b.HasOne("Modelos_Integrador.Administrador", "Administrador")
+                    b.HasOne("Modelos_Integrador.AccionAdministrativa", "AccionAdministrativa")
                         .WithMany("RegistrosAuditoria")
-                        .HasForeignKey("AdministradorID")
+                        .HasForeignKey("AccionAdministrativaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Modelos_Integrador.Administrador", "Administrador")
+                        .WithMany("RegistrosAuditoria")
+                        .HasForeignKey("AdministradorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccionAdministrativa");
 
                     b.Navigation("Administrador");
                 });
@@ -379,6 +405,11 @@ namespace Api_Integrador.Migrations
                     b.Navigation("Confederacion");
 
                     b.Navigation("Grupo");
+                });
+
+            modelBuilder.Entity("Modelos_Integrador.AccionAdministrativa", b =>
+                {
+                    b.Navigation("RegistrosAuditoria");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Administrador", b =>

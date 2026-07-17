@@ -13,6 +13,19 @@ namespace Api_Integrador.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AccionesAdministrativas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccionesAdministrativas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Confederaciones",
                 columns: table => new
                 {
@@ -83,8 +96,7 @@ namespace Api_Integrador.Migrations
                 {
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Ciudad = table.Column<string>(type: "text", nullable: false),
-                    Pais = table.Column<string>(type: "text", nullable: false)
+                    Ciudad = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,14 +140,14 @@ namespace Api_Integrador.Migrations
                     Nombre = table.Column<string>(type: "text", nullable: false),
                     Correo = table.Column<string>(type: "text", nullable: false),
                     Contraseña = table.Column<string>(type: "text", nullable: false),
-                    RolID = table.Column<int>(type: "integer", nullable: false)
+                    RolId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Administradores", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Administradores_Roles_RolID",
-                        column: x => x.RolID,
+                        name: "FK_Administradores_Roles_RolId",
+                        column: x => x.RolId,
                         principalTable: "Roles",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -148,14 +160,14 @@ namespace Api_Integrador.Migrations
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nombre = table.Column<string>(type: "text", nullable: false),
-                    SedeID = table.Column<int>(type: "integer", nullable: false)
+                    SedeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Estadios", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Estadios_Sedes_SedeID",
-                        column: x => x.SedeID,
+                        name: "FK_Estadios_Sedes_SedeId",
+                        column: x => x.SedeId,
                         principalTable: "Sedes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -167,7 +179,8 @@ namespace Api_Integrador.Migrations
                 {
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AdministradorID = table.Column<int>(type: "integer", nullable: false),
+                    AdministradorId = table.Column<int>(type: "integer", nullable: false),
+                    AccionAdministrativaId = table.Column<int>(type: "integer", nullable: false),
                     FechaHora = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Descripcion = table.Column<string>(type: "text", nullable: false)
                 },
@@ -175,8 +188,14 @@ namespace Api_Integrador.Migrations
                 {
                     table.PrimaryKey("PK_RegistroAuditorias", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_RegistroAuditorias_Administradores_AdministradorID",
-                        column: x => x.AdministradorID,
+                        name: "FK_RegistroAuditorias_AccionesAdministrativas_AccionAdministra~",
+                        column: x => x.AccionAdministrativaId,
+                        principalTable: "AccionesAdministrativas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RegistroAuditorias_Administradores_AdministradorId",
+                        column: x => x.AdministradorId,
                         principalTable: "Administradores",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -193,8 +212,8 @@ namespace Api_Integrador.Migrations
                     Fecha = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Hora = table.Column<TimeSpan>(type: "interval", nullable: false),
                     EstadioID = table.Column<int>(type: "integer", nullable: false),
-                    FaseID = table.Column<int>(type: "integer", nullable: false),
-                    EstadoID = table.Column<int>(type: "integer", nullable: false),
+                    FaseId = table.Column<int>(type: "integer", nullable: false),
+                    EstadoPartidoId = table.Column<int>(type: "integer", nullable: false),
                     GolesLocal = table.Column<int>(type: "integer", nullable: true),
                     GolesVisitante = table.Column<int>(type: "integer", nullable: true)
                 },
@@ -208,14 +227,14 @@ namespace Api_Integrador.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Partidos_EstadoPartidoes_EstadoID",
-                        column: x => x.EstadoID,
+                        name: "FK_Partidos_EstadoPartidoes_EstadoPartidoId",
+                        column: x => x.EstadoPartidoId,
                         principalTable: "EstadoPartidoes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Partidos_FaseDeJuegos_FaseID",
-                        column: x => x.FaseID,
+                        name: "FK_Partidos_FaseDeJuegos_FaseId",
+                        column: x => x.FaseId,
                         principalTable: "FaseDeJuegos",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -234,14 +253,14 @@ namespace Api_Integrador.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Administradores_RolID",
+                name: "IX_Administradores_RolId",
                 table: "Administradores",
-                column: "RolID");
+                column: "RolId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Estadios_SedeID",
+                name: "IX_Estadios_SedeId",
                 table: "Estadios",
-                column: "SedeID");
+                column: "SedeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Partidos_EstadioID",
@@ -249,14 +268,14 @@ namespace Api_Integrador.Migrations
                 column: "EstadioID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Partidos_EstadoID",
+                name: "IX_Partidos_EstadoPartidoId",
                 table: "Partidos",
-                column: "EstadoID");
+                column: "EstadoPartidoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Partidos_FaseID",
+                name: "IX_Partidos_FaseId",
                 table: "Partidos",
-                column: "FaseID");
+                column: "FaseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Partidos_SeleccionLocalID",
@@ -269,9 +288,14 @@ namespace Api_Integrador.Migrations
                 column: "SeleccionVisitanteID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegistroAuditorias_AdministradorID",
+                name: "IX_RegistroAuditorias_AccionAdministrativaId",
                 table: "RegistroAuditorias",
-                column: "AdministradorID");
+                column: "AccionAdministrativaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegistroAuditorias_AdministradorId",
+                table: "RegistroAuditorias",
+                column: "AdministradorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_selecciones_ConfederacionID",
@@ -304,6 +328,9 @@ namespace Api_Integrador.Migrations
 
             migrationBuilder.DropTable(
                 name: "selecciones");
+
+            migrationBuilder.DropTable(
+                name: "AccionesAdministrativas");
 
             migrationBuilder.DropTable(
                 name: "Administradores");

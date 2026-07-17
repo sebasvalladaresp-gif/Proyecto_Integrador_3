@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DTO_Integrador\DTO_Integrador.csproj" />
     <ProjectReference Include="..\Modelos_Integrador\Modelos_Integrador.csproj" />
   </ItemGroup>
 

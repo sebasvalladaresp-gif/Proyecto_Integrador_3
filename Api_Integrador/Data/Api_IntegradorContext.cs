@@ -22,6 +22,8 @@ namespace Api_Integrador.Data
         public DbSet<Partido> Partidos { get; set; }
         public DbSet<RegistroAuditoria> RegistroAuditorias { get; set; }
         public DbSet<Rol> Roles { get; set; }
+        // Agregar DbSet para AccionAdministrativa
+        public DbSet<AccionAdministrativa> AccionesAdministrativas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

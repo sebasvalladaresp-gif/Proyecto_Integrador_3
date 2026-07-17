@@ -13,7 +13,7 @@ namespace Modelos_Integrador
         public string Correo { get; set; }
         public string Contraseña { get; set; }
 
-        public int RolID { get; set; }
+        public int RolId { get; set; }
         public Rol? Rol { get; set; }
 
         public List<RegistroAuditoria>? RegistrosAuditoria { get; set; }

@@ -10,7 +10,6 @@ namespace Modelos_Integrador
     {
         public int ID { get; set; }
         public string Ciudad { get; set; }
-        public string Pais { get; set; }
 
         public List<Estadio>? Estadios { get; set; }
     }

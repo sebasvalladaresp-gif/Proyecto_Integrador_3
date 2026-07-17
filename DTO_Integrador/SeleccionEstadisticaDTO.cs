@@ -10,6 +10,7 @@ namespace DTO_Integrador
     {
         public int id { get; set; }
         public string nombre { get; set; }
+        public int idGrupo { get; set; }
         public int partidosJugados { get; set; }
         public int puntos { get; set; }
         public int golesAFavor { get; set; }
