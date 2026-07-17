@@ -5,7 +5,7 @@ using Api_Integrador.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modelos_Integrador;
-
+using DTO_Integrador;
 namespace Api_Integrador.Controllers
 {
     [Route("api/[controller]")]
@@ -20,10 +20,21 @@ namespace Api_Integrador.Controllers
         }
 
         // GET: api/Selecciones
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Seleccion>>> GetSelecciones()
+        [HttpGet("SeleccionDto")]
+        public async Task<ActionResult<IEnumerable<SeleccionDto>>> GetSelecciones()
         {
-            return await _context.selecciones.ToListAsync();
+            var seleccion = await _context.selecciones
+                .Include(c=>c.Confederacion).Include(g => g.Grupo)
+                .Select( s=> new SeleccionDto
+                {
+                    Nombre = s.Nombre,
+                    CodigoFifa = s.CodigoFifa,
+                    Confederacion = s.Confederacion.Nombre,
+                    Grupo = s.Grupo.Nombre
+                }).ToListAsync();
+
+            return seleccion;
+
         }
 
         // GET: api/Selecciones/5

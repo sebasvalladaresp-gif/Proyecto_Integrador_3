@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api_Integrador.Data;
 using Modelos_Integrador;
-
+using DTO_Integrador;
 namespace Api_Integrador.Controllers
 {
     [Route("api/[controller]")]
@@ -20,12 +20,15 @@ namespace Api_Integrador.Controllers
         }
 
         // GET: api/Administradores
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Administrador>>> GetAdministradores()
+        [HttpGet("AdministradorDTO")]
+        public async Task<ActionResult<IEnumerable<AdministradorDTO>>> GetAdministradores()
         {
-            return await _context.Administradores
-                .Include(a => a.Rol)
-                .ToListAsync();
+            return await _context.Administradores.Include(r => r.Rol)
+                .Select(a=> new AdministradorDTO {
+                    Nombre = a.Nombre,
+                    Correo = a.Correo,
+                    RolNombre = (a.Rol == null ? "no definido" : a.Rol.Nombre)
+                }).ToListAsync();
         }
 
         // GET: api/Administradores/5

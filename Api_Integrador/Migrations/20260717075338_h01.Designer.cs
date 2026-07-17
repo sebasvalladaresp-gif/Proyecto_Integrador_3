@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api_Integrador.Migrations
 {
     [DbContext(typeof(Api_IntegradorContext))]
-    [Migration("20260717001602_h01")]
+    [Migration("20260717075338_h01")]
     partial class h01
     {
         /// <inheritdoc />
@@ -288,10 +288,10 @@ namespace Api_Integrador.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ConfederacionID")
+                    b.Property<int>("ConfederacionId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("GrupoID")
+                    b.Property<int>("GrupoId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Nombre")
@@ -300,9 +300,9 @@ namespace Api_Integrador.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ConfederacionID");
+                    b.HasIndex("ConfederacionId");
 
-                    b.HasIndex("GrupoID");
+                    b.HasIndex("GrupoId");
 
                     b.ToTable("selecciones");
                 });
@@ -395,13 +395,13 @@ namespace Api_Integrador.Migrations
                 {
                     b.HasOne("Modelos_Integrador.Confederacion", "Confederacion")
                         .WithMany("Selecciones")
-                        .HasForeignKey("ConfederacionID")
+                        .HasForeignKey("ConfederacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Modelos_Integrador.Grupo", "Grupo")
                         .WithMany("Selecciones")
-                        .HasForeignKey("GrupoID")
+                        .HasForeignKey("GrupoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

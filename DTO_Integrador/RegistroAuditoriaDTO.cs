@@ -8,9 +8,9 @@ namespace DTO_Integrador
 {
     public class RegistroAuditoriaDTO
     {
-        public int ID { get; set; }
         public string UsuarioAdmin { get; set; }
         public DateTime FechaHora { get; set; }
         public string Descripcion { get; set; }
+        public string AccionAdministrativa { get; set; }
     }
 }

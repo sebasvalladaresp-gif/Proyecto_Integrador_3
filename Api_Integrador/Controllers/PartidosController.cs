@@ -5,7 +5,7 @@ using Api_Integrador.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modelos_Integrador;
-
+using DTO_Integrador;
 namespace Api_Integrador.Controllers
 {
     [Route("api/[controller]")]
@@ -20,13 +20,30 @@ namespace Api_Integrador.Controllers
         }
 
         // GET: api/Partidos
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Partido>>> GetPartidos()
+        [HttpGet("PartidosDTO")]
+        public async Task<ActionResult<IEnumerable<PartidoDTO>>> GetPartidos()
         {
-            return await _context.Partidos.ToListAsync();
+            var partidos = await _context.Partidos
+             .Include(p => p.SeleccionLocal)
+             .Include(p => p.SeleccionVisitante)
+             .Include(p => p.Estadio)
+             .Include(p => p.Fase)
+             .Include(p => p.Estado)
+             .Select(p => new PartidoDTO
+            {
+                SeleccionLocal = p.SeleccionLocal.Nombre,
+                SeleccionVisitante = p.SeleccionVisitante.Nombre,
+                Fecha = p.Fecha,
+                Hora = p.Hora,
+                Estadio = p.Estadio.Nombre,
+                Fase = p.Fase.Nombre,
+                Estado = p.Estado.Nombre
+            })
+            .ToListAsync();
+
+            return Ok(partidos);
         }
 
-        // GET: api/Partidos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Partido>> GetPartido(int id)
         {

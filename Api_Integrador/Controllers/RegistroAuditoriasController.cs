@@ -5,7 +5,7 @@ using Api_Integrador.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Modelos_Integrador;
-
+using DTO_Integrador;
 namespace Api_Integrador.Controllers
 {
     [Route("api/[controller]")]
@@ -20,10 +20,20 @@ namespace Api_Integrador.Controllers
         }
 
         // GET: api/RegistroAuditorias
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RegistroAuditoria>>> GetRegistroAuditorias()
+        [HttpGet("RegistroAuditoriaDTO")]
+        public async Task<ActionResult<IEnumerable<RegistroAuditoriaDTO>>> GetRegistroAuditorias()
         {
-            return await _context.RegistroAuditorias.ToListAsync();
+            var dtos = await _context.RegistroAuditorias
+           .Select(r => new RegistroAuditoriaDTO
+            {
+                UsuarioAdmin = r.Administrador.Nombre ?? "nombre no identificado",
+                FechaHora = r.FechaHora,
+                Descripcion = r.Descripcion,
+                AccionAdministrativa = r.AccionAdministrativa.Nombre ?? "sin acción definida"
+            })
+        .ToListAsync();
+
+            return Ok(dtos);
         }
 
         // GET: api/RegistroAuditorias/5

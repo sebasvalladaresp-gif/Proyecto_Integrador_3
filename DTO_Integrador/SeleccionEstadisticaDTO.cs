@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//por el momento en deshuso
 namespace DTO_Integrador
 {
     public class SeleccionEstadisticaDTO
     {
-        public int id { get; set; }
         public string nombre { get; set; }
         public int idGrupo { get; set; }
         public int partidosJugados { get; set; }

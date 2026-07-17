@@ -111,21 +111,21 @@ namespace Api_Integrador.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nombre = table.Column<string>(type: "text", nullable: false),
                     CodigoFifa = table.Column<string>(type: "text", nullable: false),
-                    ConfederacionID = table.Column<int>(type: "integer", nullable: false),
-                    GrupoID = table.Column<int>(type: "integer", nullable: false)
+                    ConfederacionId = table.Column<int>(type: "integer", nullable: false),
+                    GrupoId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_selecciones", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_selecciones_Confederaciones_ConfederacionID",
-                        column: x => x.ConfederacionID,
+                        name: "FK_selecciones_Confederaciones_ConfederacionId",
+                        column: x => x.ConfederacionId,
                         principalTable: "Confederaciones",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_selecciones_Grupos_GrupoID",
-                        column: x => x.GrupoID,
+                        name: "FK_selecciones_Grupos_GrupoId",
+                        column: x => x.GrupoId,
                         principalTable: "Grupos",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -298,14 +298,14 @@ namespace Api_Integrador.Migrations
                 column: "AdministradorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_selecciones_ConfederacionID",
+                name: "IX_selecciones_ConfederacionId",
                 table: "selecciones",
-                column: "ConfederacionID");
+                column: "ConfederacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_selecciones_GrupoID",
+                name: "IX_selecciones_GrupoId",
                 table: "selecciones",
-                column: "GrupoID");
+                column: "GrupoId");
         }
 
         /// <inheritdoc />

@@ -8,7 +8,6 @@ namespace DTO_Integrador
 {
     public class PartidoDTO
     {
-        public int ID { get; set; }
         public string SeleccionLocal { get; set; }
         public string SeleccionVisitante { get; set; }
         public DateTime Fecha { get; set; }
