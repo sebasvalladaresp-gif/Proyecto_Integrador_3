@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Api_Consumer\Api_Consumer.csproj" />
     <ProjectReference Include="..\Api_Integrador\Api_Integrador.csproj" />
     <ProjectReference Include="..\Modelos_Integrador\Modelos_Integrador.csproj" />
   </ItemGroup>

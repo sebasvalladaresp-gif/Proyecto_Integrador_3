@@ -24,31 +24,40 @@ namespace Api_Integrador.Controllers
         public async Task<ActionResult<IEnumerable<SeleccionDto>>> GetSelecciones()
         {
             var seleccion = await _context.selecciones
-                .Include(c=>c.Confederacion).Include(g => g.Grupo)
-                .Select( s=> new SeleccionDto
-                {
-                    Nombre = s.Nombre,
-                    CodigoFifa = s.CodigoFifa,
-                    Confederacion = s.Confederacion.Nombre,
-                    Grupo = s.Grupo.Nombre
-                }).ToListAsync();
+            .Select(s => new SeleccionDto
+            {
+                Id = s.ID,
+                Nombre = s.Nombre,
+                CodigoFifa = s.CodigoFifa,
+                Confederacion = s.Confederacion == null ? "No definida": s.Confederacion.Nombre,
+                Grupo = s.Grupo == null? "Por definir" : s.Grupo.Nombre
+            })
+            .ToListAsync();
 
-            return seleccion;
+            return Ok(seleccion);
 
         }
 
         // GET: api/Selecciones/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Seleccion>> GetSeleccion(int id)
+        public async Task<ActionResult<SeleccionDto>> GetSeleccion(int id)
         {
-            var seleccion = await _context.selecciones.FindAsync(id);
+            var seleccion = await _context.selecciones
+                .Where(s => s.ID == id)
+                .Select(s => new SeleccionDto
+                {
+                    Id = s.ID,
+                    Nombre = s.Nombre,
+                    CodigoFifa = s.CodigoFifa,
+                    Confederacion = s.Confederacion == null ? "No definida" : s.Confederacion.Nombre,
+                    Grupo = s.Grupo == null? "Por definir": s.Grupo.Nombre
+                })
+                .FirstOrDefaultAsync();
 
             if (seleccion == null)
-            {
                 return NotFound();
-            }
 
-            return seleccion;
+            return Ok(seleccion);
         }
 
         // POST: api/Selecciones

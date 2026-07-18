@@ -24,37 +24,44 @@ namespace Api_Integrador.Controllers
         public async Task<ActionResult<IEnumerable<PartidoDTO>>> GetPartidos()
         {
             var partidos = await _context.Partidos
-             .Include(p => p.SeleccionLocal)
-             .Include(p => p.SeleccionVisitante)
-             .Include(p => p.Estadio)
-             .Include(p => p.Fase)
-             .Include(p => p.Estado)
              .Select(p => new PartidoDTO
-            {
-                SeleccionLocal = p.SeleccionLocal.Nombre,
-                SeleccionVisitante = p.SeleccionVisitante.Nombre,
-                Fecha = p.Fecha,
+             {
+                Id=p.ID,
+                    SeleccionLocal = p.SeleccionLocal == null? "Por definir": p.SeleccionLocal.Nombre,
+
+                SeleccionVisitante = p.SeleccionVisitante == null? "Por definir": p.SeleccionVisitante.Nombre,
+                    Fecha = p.Fecha,
                 Hora = p.Hora,
-                Estadio = p.Estadio.Nombre,
-                Fase = p.Fase.Nombre,
-                Estado = p.Estado.Nombre
-            })
+                Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
+                Fase = p.Fase == null ? "No definida" : p.Fase.Nombre,
+                Estado = p.Estado == null ? "No definido" : p.Estado.Nombre
+             })
             .ToListAsync();
 
             return Ok(partidos);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Partido>> GetPartido(int id)
+        public async Task<ActionResult<PartidoDTO>> GetPartido(int id)
         {
-            var partido = await _context.Partidos.FindAsync(id);
+            var partido = await _context.Partidos
+                .Select(p => new PartidoDTO
+                {
+                    Id = p.ID,
+                    SeleccionLocal = p.SeleccionLocal == null ? "Por definir" : p.SeleccionLocal.Nombre,
+                    SeleccionVisitante = p.SeleccionVisitante == null ? "Por definir" : p.SeleccionVisitante.Nombre,
+                    Fecha = p.Fecha,
+                    Hora = p.Hora,
+                    Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
+                    Fase = p.Fase == null ? "No definida" : p.Fase.Nombre,
+                    Estado = p.Estado == null ? "No definido" : p.Estado.Nombre
+                })
+                .FirstOrDefaultAsync();
 
             if (partido == null)
-            {
                 return NotFound();
-            }
 
-            return partido;
+            return Ok(partido);
         }
 
         // POST: api/Partidos

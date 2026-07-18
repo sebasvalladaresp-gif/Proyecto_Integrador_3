@@ -8,6 +8,7 @@ namespace DTO_Integrador
 {
     public class AdministradorDTO
     {
+        public int id { get; set; }
         public string Nombre { get; set; }
         public string Correo { get; set; }
         public string RolNombre { get; set; }

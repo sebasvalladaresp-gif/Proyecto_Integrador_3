@@ -25,6 +25,7 @@ namespace Api_Integrador.Controllers
         {
             return await _context.Administradores.Include(r => r.Rol)
                 .Select(a=> new AdministradorDTO {
+                    id = a.ID,
                     Nombre = a.Nombre,
                     Correo = a.Correo,
                     RolNombre = (a.Rol == null ? "no definido" : a.Rol.Nombre)
@@ -33,19 +34,21 @@ namespace Api_Integrador.Controllers
 
         // GET: api/Administradores/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Administrador>> GetAdministrador(int id)
+        public async Task<ActionResult<AdministradorDTO>> GetAdministrador(int id)
         {
-            var administrador = await _context.Administradores
-                .Include(a => a.Rol)
-                .Include(a => a.RegistrosAuditoria)
-                .FirstOrDefaultAsync(a => a.ID == id);
-
-            if (administrador == null)
-            {
+            var dto = await _context.Administradores
+                .Include(a => a.Rol).Where(a => a.ID == id).Select(a => new AdministradorDTO
+                {
+                    id = a.ID,
+                    Nombre = a.Nombre,
+                    Correo = a.Correo,
+                    RolNombre = a.Rol == null ? "no definido" : a.Rol.Nombre
+                })
+          .FirstOrDefaultAsync();
+            if (dto == null)
                 return NotFound();
-            }
 
-            return administrador;
+            return Ok(dto);
         }
 
         // POST: api/Administradores

@@ -24,30 +24,45 @@ namespace Api_Integrador.Controllers
         public async Task<ActionResult<IEnumerable<RegistroAuditoriaDTO>>> GetRegistroAuditorias()
         {
             var dtos = await _context.RegistroAuditorias
-           .Select(r => new RegistroAuditoriaDTO
+             .Select(r => new RegistroAuditoriaDTO
             {
-                UsuarioAdmin = r.Administrador.Nombre ?? "nombre no identificado",
-                FechaHora = r.FechaHora,
-                Descripcion = r.Descripcion,
-                AccionAdministrativa = r.AccionAdministrativa.Nombre ?? "sin acción definida"
-            })
-        .ToListAsync();
+               UsuarioAdmin = r.Administrador == null? "Nombre no identificado": r.Administrador.Nombre,
+
+               AccionAdministrativa = r.AccionAdministrativa == null? "Sin acción definida" : r.AccionAdministrativa.Nombre,
+               FechaHora = r.FechaHora,
+               Descripcion = r.Descripcion,
+                
+            }).ToListAsync();
 
             return Ok(dtos);
         }
 
         // GET: api/RegistroAuditorias/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RegistroAuditoria>> GetRegistroAuditoria(int id)
+        public async Task<ActionResult<RegistroAuditoriaDTO>> GetRegistroAuditoria(int id)
         {
-            var registro = await _context.RegistroAuditorias.FindAsync(id);
+            var registro = await _context.RegistroAuditorias
+                .Where(r => r.ID == id)
+                .Select(r => new RegistroAuditoriaDTO
+                {
+                    UsuarioAdmin = r.Administrador == null
+                        ? "Nombre no identificado"
+                        : r.Administrador.Nombre,
+
+                    FechaHora = r.FechaHora,
+
+                    Descripcion = r.Descripcion,
+
+                    AccionAdministrativa = r.AccionAdministrativa == null
+                        ? "Sin acción definida"
+                        : r.AccionAdministrativa.Nombre
+                })
+                .FirstOrDefaultAsync();
 
             if (registro == null)
-            {
                 return NotFound();
-            }
 
-            return registro;
+            return Ok(registro);
         }
 
         // POST: api/RegistroAuditorias
