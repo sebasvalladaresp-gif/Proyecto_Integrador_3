@@ -33,18 +33,34 @@ namespace Api_Integrador.Controllers
         }
 
         // GET: api/Administradores/5
+        // GET: api/Administradores/5  → entidad completa (la usa Crud<Administrador> en Edit)
         [HttpGet("{id}")]
-        public async Task<ActionResult<AdministradorDTO>> GetAdministrador(int id)
+        public async Task<ActionResult<Administrador>> GetAdministrador(int id)
+        {
+            var administrador = await _context.Administradores.FindAsync(id);
+
+            if (administrador == null)
+                return NotFound();
+
+            return Ok(administrador);
+        }
+
+        // GET: api/Administradores/AdministradorDTO/5  → DTO (lo usan Index, Details, Delete)
+        [HttpGet("AdministradorDTO/{id}")]
+        public async Task<ActionResult<AdministradorDTO>> GetAdministradorDTO(int id)
         {
             var dto = await _context.Administradores
-                .Include(a => a.Rol).Where(a => a.ID == id).Select(a => new AdministradorDTO
+                .Include(a => a.Rol)
+                .Where(a => a.ID == id)
+                .Select(a => new AdministradorDTO
                 {
                     id = a.ID,
                     Nombre = a.Nombre,
                     Correo = a.Correo,
                     RolNombre = a.Rol == null ? "no definido" : a.Rol.Nombre
                 })
-          .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync();
+
             if (dto == null)
                 return NotFound();
 

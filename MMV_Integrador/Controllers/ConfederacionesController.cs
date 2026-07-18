@@ -8,6 +8,7 @@ namespace MMV_Integrador.Controllers
         // GET: ConfederacionesController
         public ActionResult Index()
         {
+
             return View();
         }
 

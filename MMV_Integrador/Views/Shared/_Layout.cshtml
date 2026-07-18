@@ -26,6 +26,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+                        <!-- Menú Desplegable -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Gestión
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="AccionesAdministrativas" asp-action="Index">Acciones Administrativas</a></li>
+                                <li><a class="dropdown-item" asp-controller="Administradores" asp-action="Index">Administradores</a></li>
+                                <li><a class="dropdown-item" asp-controller="Confederaciones" asp-action="Index">Confederaciones</a></li>
+                                <li><a class="dropdown-item" asp-controller="Estadios" asp-action="Index">Estadios</a></li>
+                                <li><a class="dropdown-item" asp-controller="EstadosPartido" asp-action="Index">EstadosPartido</a></li>
+                                <li><a class="dropdown-item" asp-controller="FaseDeJuegos" asp-action="Index">Fases de Juego</a></li>
+                                <li><a class="dropdown-item" asp-controller="Grupos" asp-action="Index">Grupos</a></li>
+                                <li><a class="dropdown-item" asp-controller="Partidos" asp-action="Index">Partidos</a></li>
+                                <li><a class="dropdown-item" asp-controller="RegistrosAuditorias" asp-action="Index">Auditorías</a></li>
+                                <li><a class="dropdown-item" asp-controller="Sedes" asp-action="Index">Sedes</a></li>
+                                <li><a class="dropdown-item" asp-controller="Selecciones" asp-action="Index">Selecciones</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

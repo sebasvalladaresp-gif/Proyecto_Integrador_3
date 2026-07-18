@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Modelos_Integrador.Administrador
+
 @{
+    ViewData["Title"] = "Editar Administrador";
+}
+
+<h1>Editar Administrador</h1>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="ID" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Nombre" class="control-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        <label asp-for="Correo" class="control-label"></label>
+        <input asp-for="Correo" type="email" class="form-control" />
+        <span asp-validation-for="Correo" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        <label>Contraseña</label>
+        @* No se precarga el valor actual por seguridad. Si se deja en blanco,
+           la API debe mantener la contraseña existente sin modificarla. *@
+        <input type="password" name="Contraseña" class="form-control"
+               placeholder="Dejar en blanco para no cambiar la contraseña"
+               autocomplete="new-password" />
+    </div>
+    <div class="form-group mt-2">
+        <label asp-for="RolId" class="control-label">Rol</label>
+        <select asp-for="RolId" class="form-control" asp-items="ViewBag.Roles">
+            <option value="">-- Seleccione un rol --</option>
+        </select>
+        <span asp-validation-for="RolId" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        <input type="submit" value="Guardar" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Volver al listado</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
