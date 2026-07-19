@@ -1,0 +1,138 @@
+﻿@*
+    Vista de Login - Temática Mundialista
+*@
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+    // Esto asume que tienes un Layout definido en Views/Shared/_Layout.cshtml
+    // Si no tienes layout, el diseño se verá afectado.
+    Layout = "_Layout";
+}
+
+<style>
+    /* --- Estilos Específicos para la Vista de Login --- */
+
+    /* Fondo de pantalla con patrón sutil */
+    body {
+        /* Fondo azul oscuro global (similar al header) */
+        background-color: #052e61;
+        /* Añadimos una imagen de fondo (puedes usar un patrón geométrico de balones) */
+        background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+        min-height: 100vh;
+    }
+
+    .login-container {
+        margin-top: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-card {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 450px;
+        border-top: 5px solid #00695c; /* Borde superior color verde del header */
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .login-header .trophy-icon {
+            font-size: 4rem;
+            color: #fbc02d; /* Color amarillo del trofeo de image_1.png */
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .login-header h2 {
+            color: #052e61;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+    .form-control {
+        border-radius: 20px;
+        padding: 12px 20px;
+        border: 1px solid #ddd;
+        background-color: #f8f9fa;
+    }
+
+        .form-control:focus {
+            border-color: #00695c;
+            box-shadow: 0 0 0 0.2rem rgba(0, 105, 92, 0.25);
+        }
+
+    .btn-login {
+        background-color: #00695c; /* Botón verde del header */
+        color: #ffffff;
+        border: none;
+        border-radius: 20px;
+        padding: 12px 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-login:hover {
+            background-color: #004d40; /* Verde más oscuro al pasar el mouse */
+            color: #ffffff;
+        }
+
+    .login-footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+        .login-footer a {
+            color: #00695c;
+            text-decoration: none;
+        }
+
+            .login-footer a:hover {
+                text-decoration: underline;
+            }
+</style>
+
+<div class="container login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="trophy-icon">🏆</div>
+            <h2>¡Inicia tu apuesta!</h2>
+            <p class="text-muted">Ingresa tus datos para acceder a <strong>Mundial UTNGolCoin</strong></p>
+        </div>
+
+        <form asp-action="Login" method="post">
+            <!-- Aquí irían tus campos del modelo LoginViewModel -->
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" name="Email" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="Password" placeholder="••••••••" required>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="rememberMe" name="RememberMe">
+                <label class="form-check-label" for="rememberMe">Recordar sesión</label>
+            </div>
+
+            <button type="submit" class="btn btn-login">Iniciar Sesión</button>
+        </form>
+
+        <div class="login-footer">
+            <p>¿Aún no tienes cuenta? <a asp-action="Registro">¡Regístrate ahora!</a></p>
+            <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+        </div>
+    </div>
+</div>

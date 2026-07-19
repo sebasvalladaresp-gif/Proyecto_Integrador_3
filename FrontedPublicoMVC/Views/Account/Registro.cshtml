@@ -1,0 +1,103 @@
+﻿@*
+    Vista de Registro - Temática Mundialista
+*@
+@{
+    ViewData["Title"] = "Registro";
+    Layout = "_Layout";
+}
+
+<style>
+    /* Reutilizamos el estilo del contenedor y el fondo del Login */
+    body {
+        background-color: #052e61;
+        background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+        min-height: 100vh;
+    }
+
+    .register-container {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .register-card {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 500px;
+        border-top: 5px solid #00695c;
+    }
+
+    .register-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+        .register-header h2 {
+            color: #052e61;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+    .btn-register {
+        background-color: #00695c;
+        color: #ffffff;
+        border: none;
+        border-radius: 20px;
+        padding: 12px 20px;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+        .btn-register:hover {
+            background-color: #004d40;
+            color: #ffffff;
+        }
+</style>
+
+<div class="container register-container">
+    <div class="register-card">
+        <div class="register-header">
+            <h2>Únete al Mundial</h2>
+            <p class="text-muted">Crea tu cuenta y empieza a ganar UTNGolCoins</p>
+        </div>
+
+        <form asp-action="Registro" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="Nombre" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Usuario</label>
+                    <input type="text" class="form-control" name="UserName" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" name="Email" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" class="form-control" name="Password" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirmar Contraseña</label>
+                <input type="password" class="form-control" name="ConfirmPassword" required>
+            </div>
+
+            <button type="submit" class="btn btn-register">Registrarse</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <p class="text-muted">¿Ya tienes cuenta? <a asp-action="Login">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+</div>
