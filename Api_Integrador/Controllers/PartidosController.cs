@@ -19,22 +19,25 @@ namespace Api_Integrador.Controllers
             _context = context;
         }
 
-        // GET: api/Partidos
+        // GET: api/Partidos/PartidosDTO
+        // HU4: calendario completo, ordenado cronologicamente (fecha y luego hora)
         [HttpGet("PartidosDTO")]
         public async Task<ActionResult<IEnumerable<PartidoDTO>>> GetPartidos()
         {
             var partidos = await _context.Partidos
+             .OrderBy(p => p.Fecha)
+             .ThenBy(p => p.Hora)
              .Select(p => new PartidoDTO
              {
-                Id=p.ID,
-                    SeleccionLocal = p.SeleccionLocal == null? "Por definir": p.SeleccionLocal.Nombre,
+                 Id = p.ID,
+                 SeleccionLocal = p.SeleccionLocal == null ? "Por definir" : p.SeleccionLocal.Nombre,
 
-                SeleccionVisitante = p.SeleccionVisitante == null? "Por definir": p.SeleccionVisitante.Nombre,
-                    Fecha = p.Fecha,
-                Hora = p.Hora,
-                Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
-                Fase = p.Fase == null ? "No definida" : p.Fase.Nombre,
-                Estado = p.Estado == null ? "No definido" : p.Estado.Nombre
+                 SeleccionVisitante = p.SeleccionVisitante == null ? "Por definir" : p.SeleccionVisitante.Nombre,
+                 Fecha = p.Fecha,
+                 Hora = p.Hora,
+                 Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
+                 Fase = p.Fase == null ? "No definida" : p.Fase.Nombre,
+                 Estado = p.Estado == null ? "No definido" : p.Estado.Nombre
              })
             .ToListAsync();
 
@@ -62,6 +65,33 @@ namespace Api_Integrador.Controllers
                 return NotFound();
 
             return Ok(partido);
+        }
+
+        // GET: api/Partidos/Marcador/5
+        // HU6 (extend "Mostrar marcador"): solo devuelve datos si el partido
+        // esta "En curso" o "Finalizado". Si todavia no arranco, 204 No Content
+        // (el frontend interpreta "sin marcador" y no muestra nada).
+        // Ruta con el id al final ("Marcador/{id}"), no al principio, para que
+        // coincida con como Crud<T>.ReadById arma la URL (Endpoint + "/" + id).
+        [HttpGet("Marcador/{id}")]
+        public async Task<ActionResult<PartidoMarcadorDTO>> GetMarcador(int id)
+        {
+            var partido = await _context.Partidos
+                .Include(p => p.Estado)
+                .FirstOrDefaultAsync(p => p.ID == id);
+
+            if (partido == null)
+                return NotFound();
+
+            var nombreEstado = partido.Estado?.Nombre ?? "";
+            if (nombreEstado != "En curso" && nombreEstado != "Finalizado")
+                return NoContent();
+
+            return Ok(new PartidoMarcadorDTO
+            {
+                GolSeleccion1 = partido.GolesLocal ?? 0,
+                GolSeleccion2 = partido.GolesVisitante ?? 0
+            });
         }
 
         // POST: api/Partidos

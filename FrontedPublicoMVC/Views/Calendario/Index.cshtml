@@ -1,0 +1,56 @@
+﻿@using DTO_Integrador
+
+@model IEnumerable<PartidoDTO>
+
+@{
+    ViewData["Title"] = "Calendario";
+    var fases = ViewBag.Fases as List<string> ?? new List<string>();
+    var faseSeleccionada = ViewBag.FaseSeleccionada as string;
+}
+
+<h1 class="mb-4">📅 Calendario de Partidos</h1>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <select name="fase" class="form-select" onchange="this.form.submit()">
+            <option value="">Todas las fases</option>
+            @foreach (var fase in fases)
+            {
+                if (fase == faseSeleccionada)
+                {
+                    <option value="@fase" selected>@fase</option>
+                }
+                else
+                {
+                    <option value="@fase">@fase</option>
+                }
+            }
+        </select>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No hay partidos para mostrar con ese filtro.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+        @foreach (var partido in Model)
+        {
+            <div class="col">
+                <a asp-controller="Calendario" asp-action="Details" asp-route-id="@partido.Id" class="text-decoration-none text-dark">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <span class="badge bg-primary mb-2">@partido.Fase</span>
+                            <h5 class="card-title">@partido.SeleccionLocal vs @partido.SeleccionVisitante</h5>
+                            <p class="card-text mb-1">📍 @partido.Estadio</p>
+                            <p class="card-text mb-1">🗓️ @partido.Fecha.ToString("dd/MM/yyyy") - ⏰ @partido.Hora</p>
+                            <span class="badge bg-secondary">@partido.Estado</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}

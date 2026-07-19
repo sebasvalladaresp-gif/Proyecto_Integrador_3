@@ -1,0 +1,33 @@
+﻿@using DTO_Integrador
+@model PartidoDTO
+
+@{
+    ViewData["Title"] = "Detalle del Partido";
+    var marcador = ViewBag.Marcador as PartidoMarcadorDTO;
+}
+
+<a asp-controller="Calendario" asp-action="Index" class="btn btn-outline-secondary btn-sm mb-3">← Volver al calendario</a>
+
+<div class="card shadow-sm">
+    <div class="card-body text-center">
+        <span class="badge bg-primary mb-2">@Model.Fase</span>
+        <h2 class="card-title">@Model.SeleccionLocal vs @Model.SeleccionVisitante</h2>
+
+        @if (marcador != null)
+        {
+            <h1 class="display-3 fw-bold my-3">@marcador.GolSeleccion1 - @marcador.GolSeleccion2</h1>
+        }
+        else
+        {
+            <p class="text-muted my-3">El partido todavía no comenzó, el marcador no está disponible.</p>
+        }
+
+        <span class="badge bg-secondary mb-3">@Model.Estado</span>
+
+        <ul class="list-group list-group-flush mt-3">
+            <li class="list-group-item">📍 Estadio: @Model.Estadio</li>
+            <li class="list-group-item">🗓️ Fecha: @Model.Fecha.ToString("dd/MM/yyyy")</li>
+            <li class="list-group-item">⏰ Hora: @Model.Hora</li>
+        </ul>
+    </div>
+</div>

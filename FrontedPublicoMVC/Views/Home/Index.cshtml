@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center p-5 rounded" style="background: linear-gradient(135deg, #0b3d91, #00843d); color: white;">
+    <h1 class="display-4 fw-bold">⚽ Bienvenido al Mundial UTNGolCoin</h1>
+    <p class="lead">Seguí el calendario, consultá las tablas de posiciones y hacé tus predicciones para ganar UTNGolCoins.</p>
+    <a asp-controller="Calendario" asp-action="Index" class="btn btn-warning btn-lg mt-3">Ver calendario completo</a>
+</div>
+
+<div class="row mt-5 text-center">
+    <div class="col-md-3">
+        <h4>📅 Calendario</h4>
+        <p>Los 104 partidos del torneo, ordenados y filtrables por fase.</p>
+    </div>
+    <div class="col-md-3">
+        <h4>📊 Grupos</h4>
+        <p>Tablas de posiciones actualizadas de los 12 grupos.</p>
+    </div>
+    <div class="col-md-3">
+        <h4>🎯 Predicciones</h4>
+        <p>Apostá tus UTNGolCoins al resultado 1X2 de cada partido.</p>
+    </div>
+    <div class="col-md-3">
+        <h4>🏅 Ranking</h4>
+        <p>Mirá quién lleva más UTNGolCoins y aciertos en la plataforma.</p>
+    </div>
+</div>

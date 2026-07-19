@@ -1,0 +1,22 @@
+﻿@model Modelos_Integrador.RegistroAuditoria
+
+<h1>Registrar Auditoría</h1>
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="AdministradorId">Administrador</label>
+        <select asp-for="AdministradorId" class="form-control" asp-items="@ViewBag.Administradores"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="AccionAdministrativaId">Acción</label>
+        <select asp-for="AccionAdministrativaId" class="form-control" asp-items="@ViewBag.Acciones"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="FechaHora">Fecha y Hora</label>
+        <input asp-for="FechaHora" type="datetime-local" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Descripcion">Descripción</label>
+        <textarea asp-for="Descripcion" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Guardar Registro</button>
+</form>

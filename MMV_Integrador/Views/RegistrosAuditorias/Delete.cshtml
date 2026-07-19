@@ -1,0 +1,9 @@
+﻿@model DTO_Integrador.RegistroAuditoriaDTO
+
+<h1>Eliminar Registro</h1>
+<h3>¿Estás seguro de eliminar este registro de auditoría?</h3>
+<form asp-action="Delete">
+    <!-- Si tu DTO no tiene ID, asegúrate de pasar el ID desde el ViewBag o ruta -->
+    <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+    <a asp-action="Index">Volver</a>
+</form>

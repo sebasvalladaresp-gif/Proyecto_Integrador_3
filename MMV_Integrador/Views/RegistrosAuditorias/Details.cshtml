@@ -1,0 +1,14 @@
+﻿@model DTO_Integrador.RegistroAuditoriaDTO
+
+<h1>Detalles de Auditoría</h1>
+<dl class="row">
+    <dt class="col-sm-3">Usuario Admin</dt>
+    <dd class="col-sm-9">@Model.UsuarioAdmin</dd>
+    <dt class="col-sm-3">Acción</dt>
+    <dd class="col-sm-9">@Model.AccionAdministrativa</dd>
+    <dt class="col-sm-3">Fecha</dt>
+    <dd class="col-sm-9">@Model.FechaHora.ToString("g")</dd>
+    <dt class="col-sm-3">Descripción</dt>
+    <dd class="col-sm-9">@Model.Descripcion</dd>
+</dl>
+<a asp-action="Index">Volver a la lista</a>
