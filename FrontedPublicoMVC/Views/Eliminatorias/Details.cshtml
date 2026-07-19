@@ -1,0 +1,25 @@
+﻿
+
+@model Modelos_Integrador.FaseDeJuego
+
+@{
+    ViewData["Title"] = "Detalle de Fase";
+}
+
+<div class="container mt-4">
+    <h2>Detalles de la Fase</h2>
+    <hr />
+    <div class="card shadow-sm col-md-6">
+        <div class="card-body">
+            <h4 class="card-title">@Model.Nombre</h4>
+            <p class="card-text">
+                <strong>ID:</strong> @Model.ID
+            </p>
+            <!-- Agrega aquí otras propiedades de tu modelo -->
+        </div>
+        <div class="card-footer bg-transparent">
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Editar</a>
+            <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+        </div>
+    </div>
+</div>

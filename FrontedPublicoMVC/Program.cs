@@ -2,6 +2,29 @@ using Api_Consumer;
 using DTO_Integrador;
 using Modelos_Integrador;
 
+// Entidades (POST, PUT, DELETE)
+Crud<Administrador>.Endpoint = "https://localhost:7185/api/Administradores";
+Crud<Partido>.Endpoint = "https://localhost:7185/api/Partidos";
+Crud<RegistroAuditoria>.Endpoint = "https://localhost:7185/api/RegistroAuditorias";
+Crud<Seleccion>.Endpoint = "https://localhost:7185/api/Selecciones";
+
+// DTO (GET)
+Crud<GrupoDTO>.Endpoint = "https://localhost:7185/api/Grupos";
+Crud<AdministradorDTO>.Endpoint = "https://localhost:7185/api/Administradores/AdministradorDTO";
+Crud<PartidoDTO>.Endpoint = "https://localhost:7185/api/Partidos/PartidosDTO";
+Crud<RegistroAuditoriaDTO>.Endpoint = "https://localhost:7185/api/RegistroAuditorias/RegistroAuditoriaDTO";
+Crud<SeleccionDto>.Endpoint = "https://localhost:7185/api/Selecciones/SeleccionDto";
+Crud<AccionAdministrativa>.Endpoint = "https://localhost:7185/api/AccionesAdministrativas";
+
+//Resto de entidades
+Crud<Confederacion>.Endpoint = "https://localhost:7185/api/Confederaciones";
+Crud<Estadio>.Endpoint = "https://localhost:7185/api/Estadios";
+Crud<EstadoPartido>.Endpoint = "https://localhost:7185/api/EstadoPartidos";
+Crud<FaseDeJuego>.Endpoint = "https://localhost:7185/api/FaseDeJuegos";
+Crud<Grupo>.Endpoint = "https://localhost:7185/api/Grupos";
+Crud<Rol>.Endpoint = "https://localhost:7185/api/Roles";
+Crud<Sede>.Endpoint = "https://localhost:7185/api/Sedes";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -19,24 +42,7 @@ builder.Services.AddSession(options =>
 var estadisticasBaseUrl = builder.Configuration["ApiSettings:EstadisticasBaseUrl"];
 var utnGolCoinBaseUrl = builder.Configuration["ApiSettings:UtnGolCoinBaseUrl"];
 
-// --- Servicio de Estadisticas (lectura publica: calendario, grupos, selecciones, etc.) ---
-Crud<Partido>.Endpoint = $"{estadisticasBaseUrl}/Partidos";
-Crud<PartidoDTO>.Endpoint = $"{estadisticasBaseUrl}/Partidos/PartidosDTO";
-Crud<PartidoMarcadorDTO>.Endpoint = $"{estadisticasBaseUrl}/Partidos/Marcador";
-Crud<Grupo>.Endpoint = $"{estadisticasBaseUrl}/Grupos";
-Crud<Seleccion>.Endpoint = $"{estadisticasBaseUrl}/Selecciones";
-Crud<SeleccionDto>.Endpoint = $"{estadisticasBaseUrl}/Selecciones/SeleccionDto";
-Crud<Confederacion>.Endpoint = $"{estadisticasBaseUrl}/Confederaciones";
-Crud<Estadio>.Endpoint = $"{estadisticasBaseUrl}/Estadios";
-Crud<FaseDeJuego>.Endpoint = $"{estadisticasBaseUrl}/FaseDeJuegos";
-Crud<Sede>.Endpoint = $"{estadisticasBaseUrl}/Sedes";
 
-// --- Servicio UTNGolCoin (login, registro, predicciones, saldo, ranking) ---
-// TODO: falta crear en C# las clases equivalentes a los DTO de Java del repo
-// utncoin-api (LoginRequest, RegistroRequest, AuthResponse, UsuarioResponse,
-// PrediccionRequest, PrediccionResponse, RankingItemResponse, SaldoResponse,
-// TransaccionResponse) antes de poder registrar sus endpoints aca con Crud<T>.
-// Las vemos en el proximo paso, cuando armemos Login/Registro y Predicciones.
 
 var app = builder.Build();
 
