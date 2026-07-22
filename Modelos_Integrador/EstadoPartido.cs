@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Modelos_Integrador
 {
-    public class EstadoPartido
+    public enum EstadoPartido
     {
-        public int ID { get; set; }
-        public string Nombre { get; set; }
-        public List<Partido>? Partidos { get; set; }
+        programado=0,
+        Enjuego=1,
+        Finalizado = 2
+
     }
 }

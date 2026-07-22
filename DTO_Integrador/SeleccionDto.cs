@@ -14,5 +14,6 @@ namespace DTO_Integrador
         public string CodigoFifa { get; set; }
         public string Confederacion { get; set; }
         public string Grupo { get; set; }
+        public bool estado { get; set; } = true;
     }
 }

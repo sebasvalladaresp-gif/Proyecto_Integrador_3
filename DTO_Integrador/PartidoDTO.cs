@@ -16,5 +16,9 @@ namespace DTO_Integrador
         public string Estadio { get; set; }
         public string Fase { get; set; }
         public string Estado { get; set; }
+
+        public int? GolSeleccion1 { get; set; }
+        public int? GolSeleccion2 { get; set; }
+
     }
 }

@@ -3,17 +3,17 @@ using System;
 using Api_Integrador.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Api_Integrador.Migrations
 {
     [DbContext(typeof(Api_IntegradorContext))]
-    [Migration("20260717075338_h01")]
-    partial class h01
+    [Migration("20260722000114_MigracionMySQL")]
+    partial class MigracionMySQL
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,21 +21,21 @@ namespace Api_Integrador.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.16")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("Modelos_Integrador.AccionAdministrativa", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -46,24 +46,24 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Contraseña")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Correo")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("RolId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -76,13 +76,13 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ID");
 
@@ -93,16 +93,16 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("SedeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -111,51 +111,17 @@ namespace Api_Integrador.Migrations
                     b.ToTable("Estadios");
                 });
 
-            modelBuilder.Entity("Modelos_Integrador.EstadoPartido", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("EstadoPartidoes");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.FaseDeJuego", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("FaseDeJuegos");
-                });
-
             modelBuilder.Entity("Modelos_Integrador.Grupo", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ID");
 
@@ -166,44 +132,40 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("EstadioID")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    b.Property<int>("EstadoPartidoId")
-                        .HasColumnType("integer");
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
 
-                    b.Property<int>("FaseId")
-                        .HasColumnType("integer");
+                    b.Property<int>("FaseDeJuego")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("GolesLocal")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int?>("GolesVisitante")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("Hora")
-                        .HasColumnType("interval");
+                        .HasColumnType("time(6)");
 
                     b.Property<int>("SeleccionLocalID")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int>("SeleccionVisitanteID")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
                     b.HasIndex("EstadioID");
-
-                    b.HasIndex("EstadoPartidoId");
-
-                    b.HasIndex("FaseId");
 
                     b.HasIndex("SeleccionLocalID");
 
@@ -216,22 +178,22 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("AccionAdministrativaId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<int>("AdministradorId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("FechaHora")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("ID");
 
@@ -246,13 +208,13 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ID");
 
@@ -263,13 +225,13 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Ciudad")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ID");
 
@@ -280,23 +242,26 @@ namespace Api_Integrador.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CodigoFifa")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("ConfederacionId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Eliminado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("GrupoId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("ID");
 
@@ -337,18 +302,6 @@ namespace Api_Integrador.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Modelos_Integrador.EstadoPartido", "Estado")
-                        .WithMany("Partidos")
-                        .HasForeignKey("EstadoPartidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Modelos_Integrador.FaseDeJuego", "Fase")
-                        .WithMany("Partidos")
-                        .HasForeignKey("FaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Modelos_Integrador.Seleccion", "SeleccionLocal")
                         .WithMany("PartidosComoLocal")
                         .HasForeignKey("SeleccionLocalID")
@@ -362,10 +315,6 @@ namespace Api_Integrador.Migrations
                         .IsRequired();
 
                     b.Navigation("Estadio");
-
-                    b.Navigation("Estado");
-
-                    b.Navigation("Fase");
 
                     b.Navigation("SeleccionLocal");
 
@@ -426,16 +375,6 @@ namespace Api_Integrador.Migrations
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Estadio", b =>
-                {
-                    b.Navigation("Partidos");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.EstadoPartido", b =>
-                {
-                    b.Navigation("Partidos");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.FaseDeJuego", b =>
                 {
                     b.Navigation("Partidos");
                 });

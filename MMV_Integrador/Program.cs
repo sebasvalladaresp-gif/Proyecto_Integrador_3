@@ -6,24 +6,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-// La URL base ahora se lee desde appsettings.json (ApiSettings:EstadisticasBaseUrl),
-// en vez de estar hardcodeada en cada linea.
+
 var baseUrl = builder.Configuration["ApiSettings:EstadisticasBaseUrl"];
 
-// Entidades (POST, PUT, DELETE)
 Crud<Administrador>.Endpoint = $"{baseUrl}/Administradores";
 Crud<Partido>.Endpoint = $"{baseUrl}/Partidos";
 Crud<RegistroAuditoria>.Endpoint = $"{baseUrl}/RegistroAuditorias";
 Crud<Seleccion>.Endpoint = $"{baseUrl}/Selecciones";
 Crud<AccionAdministrativa>.Endpoint = $"{baseUrl}/AccionesAdministrativas";
 
-// DTO (GET)
-Crud<AdministradorDTO>.Endpoint = $"{baseUrl}/Administradores/AdministradorDTO";
-Crud<PartidoDTO>.Endpoint = $"{baseUrl}/Partidos/PartidosDTO";
-Crud<RegistroAuditoriaDTO>.Endpoint = $"{baseUrl}/RegistroAuditorias/RegistroAuditoriaDTO";
-Crud<SeleccionDto>.Endpoint = $"{baseUrl}/Selecciones/SeleccionDto";
 
-// Resto de entidades
+Crud<AdministradorDTO>.Endpoint = $"{baseUrl}/Administradores";
+Crud<PartidoDTO>.Endpoint = $"{baseUrl}/Partidos";
+Crud<RegistroAuditoriaDTO>.Endpoint = $"{baseUrl}/RegistroAuditorias";
+Crud<SeleccionDto>.Endpoint = $"{baseUrl}/Selecciones";
+
 Crud<Confederacion>.Endpoint = $"{baseUrl}/Confederaciones";
 Crud<Estadio>.Endpoint = $"{baseUrl}/Estadios";
 Crud<EstadoPartido>.Endpoint = $"{baseUrl}/EstadoPartidos";

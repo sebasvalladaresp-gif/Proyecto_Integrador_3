@@ -4,36 +4,106 @@
     ViewData["Title"] = "Grupos del Torneo";
 }
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
     <div class="mb-4 text-center">
         <h1 class="display-5 fw-bold text-primary">
             <i class="bi bi-people-fill"></i> Clasificación por Grupos
         </h1>
-        <p class="text-muted">Visualiza los equipos organizados por grupos de competencia.</p>
+        <p class="text-muted">Visualiza los equipos organizados y sus estadísticas por grupo de competencia.</p>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover shadow-sm border">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col"><i class="bi bi-people"></i> Nombre del Grupo</th>
-                    <th scope="col" class="text-end">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="align-middle fw-bold">@item.Name</td>
-                        <td class="text-end">
-                            @* Requiere que GrupoDTO tenga la propiedad Id *@
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
-                                <i class="bi bi-search"></i> Ver Integrantes
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-light text-center border shadow-sm text-muted rounded-4" role="alert">
+            <i class="bi bi-info-circle"></i> Todavía no hay grupos registrados en el torneo.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var grupo in Model)
+            {
+                <div class="col-12">
+                    <div class="card shadow-sm border-0 bg-white text-dark rounded-4 overflow-hidden">
+
+                        <!-- Cabecera del Grupo -->
+                        <div class="card-header bg-primary bg-gradient text-white py-3 d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0 fw-bold">
+                                <i class="bi bi-shield-shaded"></i> @grupo.Name
+                            </h4>
+                            <a asp-action="Details" asp-route-id="@grupo.Id" class="btn btn-light btn-sm fw-bold shadow-sm">
+                                <i class="bi bi-search"></i> Ver Detalles Completos
                             </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                        </div>
+
+                        <!-- Tabla de Posiciones Interna -->
+                        <div class="card-body p-0">
+                            @if (grupo.Selecciones == null || !grupo.Selecciones.Any())
+                            {
+                                <div class="p-4 text-center text-muted">
+                                    <p class="mb-0">Todavía no hay selecciones asignadas a este grupo.</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="table-responsive m-0">
+                                    <table class="table table-light table-striped table-hover mb-0 align-middle">
+                                        <thead class="table-secondary text-dark border-bottom">
+                                            <tr>
+                                                <th scope="col" class="ps-3" style="width: 50px;">#</th>
+                                                <th scope="col">Selección</th>
+                                                <th scope="col" class="text-center">PJ</th>
+                                                <th scope="col" class="text-center">G</th>
+                                                <th scope="col" class="text-center">E</th>
+                                                <th scope="col" class="text-center">P</th>
+                                                <th scope="col" class="text-center">GF</th>
+                                                <th scope="col" class="text-center">GC</th>
+                                                <th scope="col" class="text-center">DG</th>
+                                                <th scope="col" class="text-center pe-3">Pts</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                int posicion = 1;
+                                            }
+                                            @foreach (var s in grupo.Selecciones)
+                                            {
+                                                <tr>
+                                                    <td class="ps-3 fw-bold">@posicion</td>
+                                                    <td class="fw-semibold">@s.nombre</td>
+                                                    <td class="text-center">@s.partidosJugados</td>
+                                                    <td class="text-center">@s.partidosGanados</td>
+                                                    <td class="text-center">@s.partidosEmpatados</td>
+                                                    <td class="text-center">@s.partidosPerdidos</td>
+                                                    <td class="text-center">@s.golesAFavor</td>
+                                                    <td class="text-center">@s.golesEnContra</td>
+                                                    <td class="text-center">@s.diferenciaGoles</td>
+                                                    <td class="text-center fw-bold text-primary pe-3">@s.puntos</td>
+                                                </tr>
+                                                posicion++;
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>
+
+<!-- Estilos para cambiar el fondo a blanco y asegurar contraste limpio sin JavaScript -->
+<style>
+    body {
+        background-color: #f8f9fa !important;
+        color: #212529 !important;
+    }
+
+    .card {
+        background-color: #ffffff !important;
+        border: 1px solid #dee2e6 !important;
+    }
+</style>

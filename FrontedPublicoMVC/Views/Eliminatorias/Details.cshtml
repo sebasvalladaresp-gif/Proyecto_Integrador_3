@@ -1,25 +1,72 @@
-﻿
-
-@model Modelos_Integrador.FaseDeJuego
+﻿@model DTO_Integrador.PartidoDTO
 
 @{
-    ViewData["Title"] = "Detalle de Fase";
+    ViewData["Title"] = "Detalle del Partido";
 }
 
 <div class="container mt-4">
-    <h2>Detalles de la Fase</h2>
-    <hr />
-    <div class="card shadow-sm col-md-6">
-        <div class="card-body">
-            <h4 class="card-title">@Model.Nombre</h4>
-            <p class="card-text">
-                <strong>ID:</strong> @Model.ID
-            </p>
-            <!-- Agrega aquí otras propiedades de tu modelo -->
-        </div>
-        <div class="card-footer bg-transparent">
-            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-warning">Editar</a>
-            <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+    <a asp-action="Index" class="btn btn-outline-secondary mb-4">
+        ← Volver a las llaves
+    </a>
+
+    <div class="card shadow border-0 bg-dark text-white p-4">
+        <div class="card-body text-center">
+
+            <span class="badge bg-primary fs-6 mb-3">
+                @Model.Fase
+            </span>
+
+            <h1 class="fw-bold mb-4">
+                @Model.SeleccionLocal
+                <span class="text-muted">vs</span>
+                @Model.SeleccionVisitante
+            </h1>
+
+            @if (!string.IsNullOrEmpty(Model.Estado) && Model.Estado.ToLower() == "finalizado")
+            {
+                <div class="display-2 fw-bold text-primary mb-3">
+                    @Model.GolSeleccion1
+                    <span class="text-white">-</span>
+                    @Model.GolSeleccion2
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    Estado: @Model.Estado
+                </div>
+            }
+
+            <div class="row text-start mt-4">
+                <div class="col-md-4 mb-3">
+                    <div class="border border-secondary rounded p-3 h-100">
+                        <h6 class="text-muted">📍 Estadio</h6>
+                        <strong>@Model.Estadio</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="border border-secondary rounded p-3 h-100">
+                        <h6 class="text-muted">🗓 Fecha</h6>
+                        <strong>@Model.Fecha.ToString("dd/MM/yyyy")</strong>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="border border-secondary rounded p-3 h-100">
+                        <h6 class="text-muted">⏰ Hora</h6>
+                        <strong>@Model.Hora</strong>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
+<style>
+    body {
+        background-color: #121418;
+        color: #e9ecef;
+    }
+</style>

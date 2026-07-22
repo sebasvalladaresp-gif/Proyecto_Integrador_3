@@ -1,118 +1,108 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Api_Integrador.Migrations
 {
     /// <inheritdoc />
-    public partial class h01 : Migration
+    public partial class MigracionMySQL : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "AccionesAdministrativas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AccionesAdministrativas", x => x.Id);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Confederaciones",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Confederaciones", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EstadoPartidoes",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EstadoPartidoes", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FaseDeJuegos",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FaseDeJuegos", x => x.ID);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Grupos",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Grupos", x => x.ID);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.ID);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Sedes",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Ciudad = table.Column<string>(type: "text", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Ciudad = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sedes", x => x.ID);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "selecciones",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    CodigoFifa = table.Column<string>(type: "text", nullable: false),
-                    ConfederacionId = table.Column<int>(type: "integer", nullable: false),
-                    GrupoId = table.Column<int>(type: "integer", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CodigoFifa = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConfederacionId = table.Column<int>(type: "int", nullable: false),
+                    GrupoId = table.Column<int>(type: "int", nullable: false),
+                    Eliminado = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,18 +119,22 @@ namespace Api_Integrador.Migrations
                         principalTable: "Grupos",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Administradores",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    Correo = table.Column<string>(type: "text", nullable: false),
-                    Contraseña = table.Column<string>(type: "text", nullable: false),
-                    RolId = table.Column<int>(type: "integer", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Correo = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Contraseña = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    RolId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,16 +145,18 @@ namespace Api_Integrador.Migrations
                         principalTable: "Roles",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Estadios",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nombre = table.Column<string>(type: "text", nullable: false),
-                    SedeId = table.Column<int>(type: "integer", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SedeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -171,24 +167,26 @@ namespace Api_Integrador.Migrations
                         principalTable: "Sedes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "RegistroAuditorias",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AdministradorId = table.Column<int>(type: "integer", nullable: false),
-                    AccionAdministrativaId = table.Column<int>(type: "integer", nullable: false),
-                    FechaHora = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Descripcion = table.Column<string>(type: "text", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    AdministradorId = table.Column<int>(type: "int", nullable: false),
+                    AccionAdministrativaId = table.Column<int>(type: "int", nullable: false),
+                    FechaHora = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Descripcion = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RegistroAuditorias", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_RegistroAuditorias_AccionesAdministrativas_AccionAdministra~",
+                        name: "FK_RegistroAuditorias_AccionesAdministrativas_AccionAdministrat~",
                         column: x => x.AccionAdministrativaId,
                         principalTable: "AccionesAdministrativas",
                         principalColumn: "Id",
@@ -199,23 +197,24 @@ namespace Api_Integrador.Migrations
                         principalTable: "Administradores",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Partidos",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    SeleccionLocalID = table.Column<int>(type: "integer", nullable: false),
-                    SeleccionVisitanteID = table.Column<int>(type: "integer", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Hora = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    EstadioID = table.Column<int>(type: "integer", nullable: false),
-                    FaseId = table.Column<int>(type: "integer", nullable: false),
-                    EstadoPartidoId = table.Column<int>(type: "integer", nullable: false),
-                    GolesLocal = table.Column<int>(type: "integer", nullable: true),
-                    GolesVisitante = table.Column<int>(type: "integer", nullable: true)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    SeleccionLocalID = table.Column<int>(type: "int", nullable: false),
+                    SeleccionVisitanteID = table.Column<int>(type: "int", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Hora = table.Column<TimeSpan>(type: "time(6)", nullable: false),
+                    EstadioID = table.Column<int>(type: "int", nullable: false),
+                    FaseDeJuego = table.Column<int>(type: "int", nullable: false),
+                    Estado = table.Column<int>(type: "int", nullable: false),
+                    GolesLocal = table.Column<int>(type: "int", nullable: true),
+                    GolesVisitante = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -224,18 +223,6 @@ namespace Api_Integrador.Migrations
                         name: "FK_Partidos_Estadios_EstadioID",
                         column: x => x.EstadioID,
                         principalTable: "Estadios",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Partidos_EstadoPartidoes_EstadoPartidoId",
-                        column: x => x.EstadoPartidoId,
-                        principalTable: "EstadoPartidoes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Partidos_FaseDeJuegos_FaseId",
-                        column: x => x.FaseId,
-                        principalTable: "FaseDeJuegos",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -250,7 +237,8 @@ namespace Api_Integrador.Migrations
                         principalTable: "selecciones",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Administradores_RolId",
@@ -266,16 +254,6 @@ namespace Api_Integrador.Migrations
                 name: "IX_Partidos_EstadioID",
                 table: "Partidos",
                 column: "EstadioID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Partidos_EstadoPartidoId",
-                table: "Partidos",
-                column: "EstadoPartidoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Partidos_FaseId",
-                table: "Partidos",
-                column: "FaseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Partidos_SeleccionLocalID",
@@ -319,12 +297,6 @@ namespace Api_Integrador.Migrations
 
             migrationBuilder.DropTable(
                 name: "Estadios");
-
-            migrationBuilder.DropTable(
-                name: "EstadoPartidoes");
-
-            migrationBuilder.DropTable(
-                name: "FaseDeJuegos");
 
             migrationBuilder.DropTable(
                 name: "selecciones");

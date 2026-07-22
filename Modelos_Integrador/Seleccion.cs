@@ -17,7 +17,7 @@ namespace Modelos_Integrador
 
         public int GrupoId { get; set; }
         public Grupo? Grupo { get; set; }
-
+        public bool Eliminado { get; set; } = false;
         public List<Partido>? PartidosComoLocal { get; set; }
         public List<Partido>? PartidosComoVisitante { get; set; }
     }

@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Modelos_Integrador
 {
-    public class FaseDeJuego
+    public enum FaseDeJuego
     {
-        public int ID { get; set; }
-        public string Nombre { get; set; }
-
-        public List<Partido>? Partidos { get; set; } 
+        FaseDeGrupos = 1,
+        Dieciseisavos = 2,
+        Octavos = 3,
+        Cuartos = 4,
+        Semifinal = 5,
+        TercerPuesto = 6,
+        Final = 7
     }
 }

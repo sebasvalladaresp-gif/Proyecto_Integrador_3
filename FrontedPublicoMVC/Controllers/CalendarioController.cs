@@ -1,57 +1,95 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Api_Consumer;
+﻿using Api_Consumer;
 using DTO_Integrador;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Publico_Integrador.Controllers
 {
     public class CalendarioController : Controller
     {
-        // GET: Calendario/Index?fase=Octavos
-        public ActionResult Index(string? fase)
+        // GET: RankingController
+        public ActionResult Index()
         {
-            var partidos = Crud<PartidoDTO>.ReadAll();
-
-            // Combo de fases: se arma con los valores que ya trae el propio listado,
-            // no hace falta un endpoint aparte de FaseDeJuego para esto.
-            ViewBag.Fases = partidos.Select(p => p.Fase).Distinct().OrderBy(f => f).ToList();
-            ViewBag.FaseSeleccionada = fase;
-
-            if (!string.IsNullOrEmpty(fase))
-                partidos = partidos.Where(p => p.Fase == fase).ToList();
-
-            return View(partidos);
+            
+            return View(Crud<PartidoDTO>.ReadAll());
         }
 
-        // GET: Calendario/Details/5
+        // GET: RankingController/Details/5
         public ActionResult Details(int id)
         {
-            // La API tiene una ruta distinta para el detalle ("api/Partidos/{id}")
-            // que para el listado ("api/Partidos/PartidosDTO"), y Crud<T> solo
-            // admite un Endpoint fijo por tipo. Filtramos en memoria para no
-            // pelear contra esa limitacion (dataset chico: 104 partidos como maximo).
-            var partido = Crud<PartidoDTO>.ReadAll().FirstOrDefault(p => p.Id == id);
+          
+            var dato = Crud<PartidoDTO>.ReadById(id.ToString());
+            if (dato != null)
+                return View(dato);
 
-            if (partido == null)
-                return NotFound();
+            return NotFound();
 
-            // El marcador solo existe si el partido esta "En curso" o "Finalizado".
-            // La API devuelve 204 No Content en cualquier otro caso, que Crud<T>
-            // deserializa como null (no tira excepcion), asi que alcanza con
-            // chequear null en la vista.
-            PartidoMarcadorDTO? marcador = null;
+            
+        }
+
+        // GET: RankingController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: RankingController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
             try
             {
-                marcador = Crud<PartidoMarcadorDTO>.ReadById(id.ToString());
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                marcador = null;
+                return View();
             }
-
-            ViewBag.Marcador = marcador;
-
-            return View(partido);
         }
+
+        // GET: RankingController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: RankingController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: RankingController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: RankingController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }

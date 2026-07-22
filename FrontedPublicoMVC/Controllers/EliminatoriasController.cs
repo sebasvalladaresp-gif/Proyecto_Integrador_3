@@ -1,4 +1,5 @@
 ﻿using Api_Consumer;
+using DTO_Integrador;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modelos_Integrador;
@@ -10,15 +11,26 @@ namespace FrontedPublicoMVC.Controllers
         // GET: EliminatoriasController
         public ActionResult Index()
         {
-            var dato=Crud<FaseDeJuego>.ReadAll();
-            return View(dato);
+            var partidos = Crud<PartidoDTO>.ReadAll() ?? new List<PartidoDTO>();
+
+            var partidosEliminatorias = partidos
+                .Where(p => p.Fase != null && p.Fase != "Fase de Grupos")
+                .ToList();
+
+            var fasesEliminatorias = partidosEliminatorias
+                .GroupBy(p => p.Fase)
+                .ToList();
+
+            return View(fasesEliminatorias);
         }
 
         // GET: EliminatoriasController/Details/5
         public ActionResult Details(int id)
         {
-            var dato=Crud<FaseDeJuego>.ReadById(id.ToString());
-            if(dato != null) return View(dato);
+            var partido = Crud<PartidoDTO>.ReadById(id.ToString());
+            if (partido != null)
+                return View(partido);
+
             return NotFound();
         }
 

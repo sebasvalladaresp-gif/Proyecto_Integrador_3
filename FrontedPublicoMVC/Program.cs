@@ -19,8 +19,7 @@ Crud<AccionAdministrativa>.Endpoint = "https://localhost:7185/api/AccionesAdmini
 //Resto de entidades
 Crud<Confederacion>.Endpoint = "https://localhost:7185/api/Confederaciones";
 Crud<Estadio>.Endpoint = "https://localhost:7185/api/Estadios";
-Crud<EstadoPartido>.Endpoint = "https://localhost:7185/api/EstadoPartidos";
-Crud<FaseDeJuego>.Endpoint = "https://localhost:7185/api/FaseDeJuegos";
+
 Crud<Grupo>.Endpoint = "https://localhost:7185/api/Grupos";
 Crud<Rol>.Endpoint = "https://localhost:7185/api/Roles";
 Crud<Sede>.Endpoint = "https://localhost:7185/api/Sedes";

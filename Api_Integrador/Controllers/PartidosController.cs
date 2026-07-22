@@ -25,73 +25,89 @@ namespace Api_Integrador.Controllers
         public async Task<ActionResult<IEnumerable<PartidoDTO>>> GetPartidos()
         {
             var partidos = await _context.Partidos
-             .OrderBy(p => p.Fecha)
-             .ThenBy(p => p.Hora)
-             .Select(p => new PartidoDTO
-             {
-                 Id = p.ID,
-                 SeleccionLocal = p.SeleccionLocal == null ? "Por definir" : p.SeleccionLocal.Nombre,
+                .Include(p => p.SeleccionLocal)
+                .Include(p => p.SeleccionVisitante)
+                .Include(p => p.Estadio)
+                .OrderBy(p => p.Fecha)
+                .ThenBy(p => p.Hora)
+                .ToListAsync();
 
-                 SeleccionVisitante = p.SeleccionVisitante == null ? "Por definir" : p.SeleccionVisitante.Nombre,
-                 Fecha = p.Fecha,
-                 Hora = p.Hora,
-                 Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
-                 Fase = p.Fase == null ? "No definida" : p.Fase.Nombre,
-                 Estado = p.Estado == null ? "No definido" : p.Estado.Nombre
-             })
-            .ToListAsync();
+            var partidosDTO = partidos.Select(p => new PartidoDTO
+            {
+                Id = p.ID,
+                SeleccionLocal = p.SeleccionLocal == null ? "Por definir" : p.SeleccionLocal.Nombre,
+                SeleccionVisitante = p.SeleccionVisitante == null ? "Por definir" : p.SeleccionVisitante.Nombre,
+                Fecha = p.Fecha,
+                Hora = p.Hora,
+                Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
+                Fase = FaseNombre(p.FaseDeJuego),
+                Estado = EstadoNombre(p.Estado),
+                GolSeleccion1 = p.GolesLocal,
+                GolSeleccion2 = p.GolesVisitante
+            });
+           
 
-            return Ok(partidos);
+            return Ok(partidosDTO);
+        }
+        private string FaseNombre(FaseDeJuego fase) 
+        {
+            if(fase == FaseDeJuego.FaseDeGrupos)
+                return "Fase de Grupos";
+            else if (fase == FaseDeJuego.Dieciseisavos)
+                return "Dieciseisavos";
+            else if (fase == FaseDeJuego.Octavos)
+                return "Octavos";
+            else if (fase == FaseDeJuego.Cuartos)
+                return "Cuartos";
+            else if (fase == FaseDeJuego.Semifinal)
+                return "Semifinal";
+            else if (fase == FaseDeJuego.TercerPuesto)
+                return "Tercer Puesto";
+            else if (fase == FaseDeJuego.Final)
+                return "Final";
+            else
+                return "No definida";
         }
 
-        [HttpGet("{id}")]
+        private string EstadoNombre(EstadoPartido estado) 
+        {
+            if (estado == EstadoPartido.programado)
+                return "Programado";
+            else if (estado == EstadoPartido.Enjuego)
+                return "En curso";
+            else if (estado == EstadoPartido.Finalizado)
+                return "Finalizado";
+            else
+                return "No definido";
+        }
+
+        [HttpGet("PartidosDTO/{id}")]
         public async Task<ActionResult<PartidoDTO>> GetPartido(int id)
         {
-            var partido = await _context.Partidos
-                .Select(p => new PartidoDTO
-                {
-                    Id = p.ID,
-                    SeleccionLocal = p.SeleccionLocal == null ? "Por definir" : p.SeleccionLocal.Nombre,
-                    SeleccionVisitante = p.SeleccionVisitante == null ? "Por definir" : p.SeleccionVisitante.Nombre,
-                    Fecha = p.Fecha,
-                    Hora = p.Hora,
-                    Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
-                    Fase = p.Fase == null ? "No definida" : p.Fase.Nombre,
-                    Estado = p.Estado == null ? "No definido" : p.Estado.Nombre
-                })
-                .FirstOrDefaultAsync();
+            var p = await _context.Partidos
+                .Include(p => p.SeleccionLocal)
+                .Include(p => p.SeleccionVisitante)
+                .Include(p => p.Estadio)
+                .FirstOrDefaultAsync(x => x.ID == id);
 
-            if (partido == null)
+            if (p == null)
                 return NotFound();
 
-            return Ok(partido);
-        }
-
-        // GET: api/Partidos/Marcador/5
-        // HU6 (extend "Mostrar marcador"): solo devuelve datos si el partido
-        // esta "En curso" o "Finalizado". Si todavia no arranco, 204 No Content
-        // (el frontend interpreta "sin marcador" y no muestra nada).
-        // Ruta con el id al final ("Marcador/{id}"), no al principio, para que
-        // coincida con como Crud<T>.ReadById arma la URL (Endpoint + "/" + id).
-        [HttpGet("Marcador/{id}")]
-        public async Task<ActionResult<PartidoMarcadorDTO>> GetMarcador(int id)
-        {
-            var partido = await _context.Partidos
-                .Include(p => p.Estado)
-                .FirstOrDefaultAsync(p => p.ID == id);
-
-            if (partido == null)
-                return NotFound();
-
-            var nombreEstado = partido.Estado?.Nombre ?? "";
-            if (nombreEstado != "En curso" && nombreEstado != "Finalizado")
-                return NoContent();
-
-            return Ok(new PartidoMarcadorDTO
+            var partidoDto = new PartidoDTO
             {
-                GolSeleccion1 = partido.GolesLocal ?? 0,
-                GolSeleccion2 = partido.GolesVisitante ?? 0
-            });
+                Id = p.ID,
+                SeleccionLocal = p.SeleccionLocal?.Nombre ?? "Por definir",
+                SeleccionVisitante = p.SeleccionVisitante?.Nombre ?? "Por definir",
+                Fecha = p.Fecha,
+                Hora = p.Hora,
+                Estadio = p.Estadio?.Nombre ?? "No definido",
+                Fase = FaseNombre(p.FaseDeJuego),
+                Estado = EstadoNombre(p.Estado),
+                GolSeleccion1 = p.GolesLocal,
+                GolSeleccion2 = p.GolesVisitante
+            };
+
+            return Ok(partidoDto);
         }
 
         // POST: api/Partidos
@@ -112,9 +128,7 @@ namespace Api_Integrador.Controllers
             {
                 return BadRequest();
             }
-
             _context.Entry(partido).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -130,7 +144,6 @@ namespace Api_Integrador.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -154,5 +167,7 @@ namespace Api_Integrador.Controllers
         {
             return _context.Partidos.Any(e => e.ID == id);
         }
+
+        
     }
 }

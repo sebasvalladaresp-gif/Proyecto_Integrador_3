@@ -51,23 +51,16 @@ namespace Api_Integrador.Controllers
             return Ok(ArmarGrupoDTO(grupo, partidosFinalizados));
         }
 
-        // Trae solo los partidos ya finalizados (con marcador cargado),
-        // que son los unicos que cuentan para la tabla de posiciones.
         private async Task<List<Partido>> ObtenerPartidosFinalizadosAsync()
         {
             return await _context.Partidos
-                .Include(p => p.Estado)
-                .AsNoTracking()
-                .Where(p => p.Estado != null
-                    && p.Estado.Nombre == "Finalizado"
-                    && p.GolesLocal != null
-                    && p.GolesVisitante != null)
-                .ToListAsync();
+             .AsNoTracking()
+             .Where(p => p.Estado == EstadoPartido.Finalizado
+                 && p.GolesLocal != null
+                 && p.GolesVisitante != null)
+             .ToListAsync();
         }
 
-        // Calcula PJ, G, E, P, GF, GC, DG y Puntos de cada seleccion del grupo,
-        // recorriendo sus partidos como local y como visitante (HU5).
-        // Orden: puntos desc, diferencia de goles desc, goles a favor desc.
         private GrupoDTO ArmarGrupoDTO(Grupo grupo, List<Partido> partidosFinalizados)
         {
             var seleccionesDto = grupo.Selecciones!.Select(s =>
