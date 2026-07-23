@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Modelos_Integrador
 {
-    public class AccionAdministrativa
+    public enum AccionAdministrativa
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public List<RegistroAuditoria>? RegistrosAuditoria { get; set; }
+        RegistrarSeleccion=1,
+        EditarSeleccion=2,
+        RegistrarPartido=3,
+        EditarPartido=4,
+        RegistrarResultado=5,
+        CambiarRol=6
     }
 }

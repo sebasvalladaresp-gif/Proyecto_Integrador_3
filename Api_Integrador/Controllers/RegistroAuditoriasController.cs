@@ -28,7 +28,7 @@ namespace Api_Integrador.Controllers
             {
                UsuarioAdmin = r.Administrador == null? "Nombre no identificado": r.Administrador.Nombre,
 
-               AccionAdministrativa = r.AccionAdministrativa == null? "Sin acción definida" : r.AccionAdministrativa.Nombre,
+               AccionAdministrativa = r.AccionAdministrativa == null? "Sin acción definida" : r.AccionAdministrativa.ToString(),
                FechaHora = r.FechaHora,
                Descripcion = r.Descripcion,
                 
@@ -55,7 +55,7 @@ namespace Api_Integrador.Controllers
 
                     AccionAdministrativa = r.AccionAdministrativa == null
                         ? "Sin acción definida"
-                        : r.AccionAdministrativa.Nombre
+                        : r.AccionAdministrativa.ToString()
                 })
                 .FirstOrDefaultAsync();
 

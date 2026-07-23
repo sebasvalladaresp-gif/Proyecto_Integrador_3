@@ -28,7 +28,7 @@ namespace Api_Integrador.Controllers
                     id = a.ID,
                     Nombre = a.Nombre,
                     Correo = a.Correo,
-                    RolNombre = (a.Rol == null ? "no definido" : a.Rol.Nombre)
+                    RolNombre = (a.Rol == null ? "no definido" : a.Rol.ToString())
                 }).ToListAsync();
         }
 
@@ -57,7 +57,7 @@ namespace Api_Integrador.Controllers
                     id = a.ID,
                     Nombre = a.Nombre,
                     Correo = a.Correo,
-                    RolNombre = a.Rol == null ? "no definido" : a.Rol.Nombre
+                    RolNombre = a.Rol == null ? "no definido" : a.Rol.ToString()
                 })
                 .FirstOrDefaultAsync();
 

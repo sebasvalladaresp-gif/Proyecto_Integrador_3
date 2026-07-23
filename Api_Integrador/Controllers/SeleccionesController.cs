@@ -29,7 +29,7 @@ namespace Api_Integrador.Controllers
                 Id = s.ID,
                 Nombre = s.Nombre,
                 CodigoFifa = s.CodigoFifa,
-                Confederacion = s.Confederacion == null ? "No definida": s.Confederacion.Nombre,
+                Confederacion = s.Confederacion == null ? "No definida": s.Confederacion.ToString(),
                 Grupo = s.Grupo == null? "Por definir" : s.Grupo.Nombre
             })
             .ToListAsync();
@@ -49,7 +49,7 @@ namespace Api_Integrador.Controllers
                     Id = s.ID,
                     Nombre = s.Nombre,
                     CodigoFifa = s.CodigoFifa,
-                    Confederacion = s.Confederacion == null ? "No definida" : s.Confederacion.Nombre,
+                    Confederacion = s.Confederacion == null ? "No definida" : s.Confederacion.ToString(),
                     Grupo = s.Grupo == null? "Por definir": s.Grupo.Nombre
                 })
                 .FirstOrDefaultAsync();

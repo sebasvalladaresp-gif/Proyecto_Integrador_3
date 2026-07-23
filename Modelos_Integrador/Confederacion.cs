@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Modelos_Integrador
 {
-    public class Confederacion
+    public enum Confederacion
     {
-        public int ID { get; set; }
-        public string Nombre { get; set; }
-        public List<Seleccion>? Selecciones { get; set; }
+        Uefa=1,
+        Conmebol=2,
+        Caf=3,
+        Concacaf=4,
+        Asa=5,
+        Ofc=6
     }
 }

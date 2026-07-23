@@ -40,8 +40,8 @@ namespace Api_Integrador.Controllers
                 Fecha = p.Fecha,
                 Hora = p.Hora,
                 Estadio = p.Estadio == null ? "No definido" : p.Estadio.Nombre,
-                Fase = FaseNombre(p.FaseDeJuego),
-                Estado = EstadoNombre(p.Estado),
+                Fase = p.FaseDeJuego.ToString(),
+                Estado =p.Estado.ToString(),
                 GolSeleccion1 = p.GolesLocal,
                 GolSeleccion2 = p.GolesVisitante
             });
@@ -49,37 +49,9 @@ namespace Api_Integrador.Controllers
 
             return Ok(partidosDTO);
         }
-        private string FaseNombre(FaseDeJuego fase) 
-        {
-            if(fase == FaseDeJuego.FaseDeGrupos)
-                return "Fase de Grupos";
-            else if (fase == FaseDeJuego.Dieciseisavos)
-                return "Dieciseisavos";
-            else if (fase == FaseDeJuego.Octavos)
-                return "Octavos";
-            else if (fase == FaseDeJuego.Cuartos)
-                return "Cuartos";
-            else if (fase == FaseDeJuego.Semifinal)
-                return "Semifinal";
-            else if (fase == FaseDeJuego.TercerPuesto)
-                return "Tercer Puesto";
-            else if (fase == FaseDeJuego.Final)
-                return "Final";
-            else
-                return "No definida";
-        }
+        
 
-        private string EstadoNombre(EstadoPartido estado) 
-        {
-            if (estado == EstadoPartido.programado)
-                return "Programado";
-            else if (estado == EstadoPartido.Enjuego)
-                return "En curso";
-            else if (estado == EstadoPartido.Finalizado)
-                return "Finalizado";
-            else
-                return "No definido";
-        }
+       
 
         [HttpGet("PartidosDTO/{id}")]
         public async Task<ActionResult<PartidoDTO>> GetPartido(int id)
@@ -101,8 +73,8 @@ namespace Api_Integrador.Controllers
                 Fecha = p.Fecha,
                 Hora = p.Hora,
                 Estadio = p.Estadio?.Nombre ?? "No definido",
-                Fase = FaseNombre(p.FaseDeJuego),
-                Estado = EstadoNombre(p.Estado),
+                Fase = p.FaseDeJuego.ToString(),
+                Estado = p.Estado.ToString(),
                 GolSeleccion1 = p.GolesLocal,
                 GolSeleccion2 = p.GolesVisitante
             };

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api_Integrador.Migrations
 {
     [DbContext(typeof(Api_IntegradorContext))]
-    [Migration("20260722000114_MigracionMySQL")]
-    partial class MigracionMySQL
+    [Migration("20260722204634_v01")]
+    partial class v01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,23 +24,6 @@ namespace Api_Integrador.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("Modelos_Integrador.AccionAdministrativa", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccionesAdministrativas");
-                });
 
             modelBuilder.Entity("Modelos_Integrador.Administrador", b =>
                 {
@@ -62,31 +45,12 @@ namespace Api_Integrador.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("RolId")
+                    b.Property<int>("Rol")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("RolId");
 
                     b.ToTable("Administradores");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.Confederacion", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Confederaciones");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Estadio", b =>
@@ -182,7 +146,7 @@ namespace Api_Integrador.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("AccionAdministrativaId")
+                    b.Property<int>("AccionAdministrativa")
                         .HasColumnType("int");
 
                     b.Property<int>("AdministradorId")
@@ -197,28 +161,9 @@ namespace Api_Integrador.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AccionAdministrativaId");
-
                     b.HasIndex("AdministradorId");
 
                     b.ToTable("RegistroAuditorias");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.Rol", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Sede", b =>
@@ -250,7 +195,7 @@ namespace Api_Integrador.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ConfederacionId")
+                    b.Property<int>("Confederacion")
                         .HasColumnType("int");
 
                     b.Property<bool>("Eliminado")
@@ -265,22 +210,9 @@ namespace Api_Integrador.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ConfederacionId");
-
                     b.HasIndex("GrupoId");
 
                     b.ToTable("selecciones");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.Administrador", b =>
-                {
-                    b.HasOne("Modelos_Integrador.Rol", "Rol")
-                        .WithMany("administradores")
-                        .HasForeignKey("RolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Estadio", b =>
@@ -323,55 +255,29 @@ namespace Api_Integrador.Migrations
 
             modelBuilder.Entity("Modelos_Integrador.RegistroAuditoria", b =>
                 {
-                    b.HasOne("Modelos_Integrador.AccionAdministrativa", "AccionAdministrativa")
-                        .WithMany("RegistrosAuditoria")
-                        .HasForeignKey("AccionAdministrativaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Modelos_Integrador.Administrador", "Administrador")
                         .WithMany("RegistrosAuditoria")
                         .HasForeignKey("AdministradorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AccionAdministrativa");
-
                     b.Navigation("Administrador");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Seleccion", b =>
                 {
-                    b.HasOne("Modelos_Integrador.Confederacion", "Confederacion")
-                        .WithMany("Selecciones")
-                        .HasForeignKey("ConfederacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Modelos_Integrador.Grupo", "Grupo")
                         .WithMany("Selecciones")
                         .HasForeignKey("GrupoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Confederacion");
-
                     b.Navigation("Grupo");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.AccionAdministrativa", b =>
-                {
-                    b.Navigation("RegistrosAuditoria");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Administrador", b =>
                 {
                     b.Navigation("RegistrosAuditoria");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.Confederacion", b =>
-                {
-                    b.Navigation("Selecciones");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Estadio", b =>
@@ -382,11 +288,6 @@ namespace Api_Integrador.Migrations
             modelBuilder.Entity("Modelos_Integrador.Grupo", b =>
                 {
                     b.Navigation("Selecciones");
-                });
-
-            modelBuilder.Entity("Modelos_Integrador.Rol", b =>
-                {
-                    b.Navigation("administradores");
                 });
 
             modelBuilder.Entity("Modelos_Integrador.Sede", b =>

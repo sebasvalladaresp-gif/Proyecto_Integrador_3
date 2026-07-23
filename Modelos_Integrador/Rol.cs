@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Modelos_Integrador
 {
-    public class Rol
+    public enum Rol
     {
-        public int ID { get; set; }
-        public string Nombre { get; set; }
+        Administrador=1,
+        UsuarioRegistrado = 2
 
-        public List<Administrador>? administradores { get; set; }
     }
 }

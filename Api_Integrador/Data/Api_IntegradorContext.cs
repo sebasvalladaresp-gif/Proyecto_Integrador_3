@@ -11,7 +11,6 @@ namespace Api_Integrador.Data
         }
 
         // Tus DbSets actuales
-        public DbSet<Confederacion> Confederaciones { get; set; }
         public DbSet<Estadio> Estadios { get; set; }
         public DbSet<Sede> Sedes { get; set; }
         public DbSet<Administrador> Administradores { get; set; }
@@ -19,9 +18,7 @@ namespace Api_Integrador.Data
         public DbSet<Grupo> Grupos { get; set; }
         public DbSet<Partido> Partidos { get; set; }
         public DbSet<RegistroAuditoria> RegistroAuditorias { get; set; }
-        public DbSet<Rol> Roles { get; set; }
-        // Agregar DbSet para AccionAdministrativa
-        public DbSet<AccionAdministrativa> AccionesAdministrativas { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +33,7 @@ namespace Api_Integrador.Data
 
                  modelBuilder.Entity<Partido>()
                 .HasOne(p => p.SeleccionVisitante)
-                .WithMany(s => s.PartidosComoVisitante)  // ? antes vacío
+                .WithMany(s => s.PartidosComoVisitante)  
                 .HasForeignKey(p => p.SeleccionVisitanteID)
                 .OnDelete(DeleteBehavior.Restrict);
         }

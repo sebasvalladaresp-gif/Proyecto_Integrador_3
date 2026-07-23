@@ -13,8 +13,7 @@ namespace Modelos_Integrador
         public int AdministradorId { get; set; }
         public Administrador? Administrador { get; set; }
 
-        public int AccionAdministrativaId { get; set; }
-        public AccionAdministrativa? AccionAdministrativa { get; set; }
+        public AccionAdministrativa AccionAdministrativa { get; set; }
 
         public DateTime FechaHora { get; set; }
         public string Descripcion { get; set; }

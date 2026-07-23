@@ -9,11 +9,7 @@ namespace MMV_Integrador.Controllers
 {
     public class AdministradoresController : Controller
     {
-        private void CargarRoles(int? rolSeleccionado = null)
-        {
-            var roles = Crud<Rol>.ReadAll();
-            ViewBag.Roles = new SelectList(roles, "ID", "Nombre", rolSeleccionado);
-        }
+       
 
         // GET: AdministradoresController
         public ActionResult Index()
@@ -33,7 +29,7 @@ namespace MMV_Integrador.Controllers
         // GET: AdministradoresController/Create
         public ActionResult Create()
         {
-            CargarRoles();
+
             return View();
         }
 
@@ -49,7 +45,7 @@ namespace MMV_Integrador.Controllers
             }
             catch
             {
-                CargarRoles(administrador.RolId);
+               
                 return View(administrador);
             }
         }
@@ -60,7 +56,7 @@ namespace MMV_Integrador.Controllers
             // Acá sí necesito la entidad completa (no el DTO), porque el formulario
             // necesita el RolId real para preseleccionar el combo.
             var administrador = Crud<Administrador>.ReadById(id.ToString());
-            CargarRoles(administrador.RolId);
+         
             return View(administrador);
         }
 
@@ -85,7 +81,6 @@ namespace MMV_Integrador.Controllers
                 // ESTO ES CLAVE: Mostrará el error en la vista en lugar de fallar en silencio
                 ModelState.AddModelError("", "Ocurrió un error al guardar: " + ex.Message);
 
-                CargarRoles(administrador.RolId);
                 return View(administrador);
             }
         }
